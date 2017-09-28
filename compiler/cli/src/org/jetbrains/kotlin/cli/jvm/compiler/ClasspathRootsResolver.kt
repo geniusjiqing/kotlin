@@ -213,7 +213,7 @@ class ClasspathRootsResolver(
             }
             else if (module.moduleRoots != existing.moduleRoots) {
                 fun JavaModule.getRootFile() =
-                        moduleRoots.singleOrNull()?.file?.let { VfsUtilCore.getVirtualFileForJar(it) ?: it }
+                        moduleRoots.firstOrNull()?.file?.let { VfsUtilCore.getVirtualFileForJar(it) ?: it }
 
                 val thisFile = module.getRootFile()
                 val existingFile = existing.getRootFile()
