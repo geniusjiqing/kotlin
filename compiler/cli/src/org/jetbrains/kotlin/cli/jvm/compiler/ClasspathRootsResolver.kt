@@ -107,12 +107,12 @@ class ClasspathRootsResolver(
             result += JavaRoot(root, JavaRoot.RootType.BINARY)
         }
 
-        val hasSourceModule = modules.any(JavaModule::isSourceModule)
+        val outputDirectoryAddedAsPartOfModule = modules.any { module -> module.moduleRoots.any { it.file == outputDirectory } }
 
         for (root in jvmModulePathRoots) {
             // Do not add output directory as a separate module if we're compiling an explicit named module.
             // It's going to be included as a root of our module in modularSourceRoot.
-            if (hasSourceModule && root == outputDirectory) continue
+            if (outputDirectoryAddedAsPartOfModule && root == outputDirectory) continue
 
             val module = modularBinaryRoot(root)
             if (module != null) {
