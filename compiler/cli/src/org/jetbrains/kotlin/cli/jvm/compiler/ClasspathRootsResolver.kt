@@ -150,7 +150,6 @@ class ClasspathRootsResolver(
     }
 
     private fun modularBinaryRoot(root: VirtualFile): JavaModule? {
-        val originalFile = VfsUtilCore.virtualToIoFile(root)
         val isJar = root.fileSystem.protocol == StandardFileSystems.JAR_PROTOCOL
         val manifest: Attributes? by lazy(NONE) { readManifestAttributes(root) }
 
@@ -174,6 +173,7 @@ class ClasspathRootsResolver(
                 return JavaModule.Automatic(automaticModuleName, moduleRoot)
             }
 
+            val originalFile = VfsUtilCore.virtualToIoFile(root)
             val moduleName = LightJavaModule.moduleName(originalFile.nameWithoutExtension)
             if (moduleName.isEmpty()) {
                 report(ERROR, "Cannot infer automatic module name for the file", VfsUtilCore.getVirtualFileForJar(root) ?: root)
