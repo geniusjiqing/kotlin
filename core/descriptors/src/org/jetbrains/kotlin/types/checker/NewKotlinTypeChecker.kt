@@ -260,7 +260,7 @@ object NewKotlinTypeChecker : KotlinTypeChecker {
         }
 
         // i.e. superType is not a classType
-        if (constructor.declarationDescriptor !is ClassDescriptor) {
+        if (constructor !is ClassDescriptor) {
             return collectAllSupertypesWithGivenTypeConstructor(baseType, constructor)
         }
 
